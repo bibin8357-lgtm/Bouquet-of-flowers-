@@ -3,183 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday, My Love</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:italic,wght@400;700&family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <title>Happy Birthday Cutiepie!</title>
     <style>
         :root {
-            --primary-pink: #ffafbd;
-            --deep-rose: #ffc3a0;
-            --text-color: #4a4a4a;
-            --accent: #d63384;
+            --bg: #fff5f8;
+            --soft-purple: #6a5a8c;
+            --soft-pink: #d195a8;
+            --card-shadow: 0 15px 35px rgba(0,0,0,0.05);
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Montserrat', sans-serif;
-            scroll-behavior: smooth;
-            background: linear-gradient(135deg, var(--primary-pink), var(--deep-rose));
-            color: var(--text-color);
-            overflow-x: hidden;
+            margin: 0; padding: 0;
+            font-family: 'Comic Sans MS', 'Montserrat', sans-serif;
+            background: radial-gradient(circle, #fff5f8 0%, #f3efff 100%);
+            height: 100vh; overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        /* Floating Hearts Animation */
-        .hearts {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            pointer-events: none;
+        /* App Container */
+        .phone-frame {
+            width: 90%; max-width: 380px; height: 85vh;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(15px);
+            border: 10px solid white; border-radius: 45px;
+            box-shadow: var(--card-shadow);
+            position: relative; overflow: hidden;
+            display: flex; flex-direction: column;
         }
 
-        /* Sections */
-        section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
+        .screen {
+            display: none; width: 100%; height: 100%;
+            flex-direction: column; justify-content: center;
+            align-items: center; text-align: center;
+            padding: 20px; box-sizing: border-box;
+            animation: fadeIn 0.6s ease-out;
         }
 
-        /* Page 1: Hero */
-        #hero {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-        }
+        .active { display: flex; }
 
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 5rem;
-            color: white;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 10px;
-        }
+        /* Typography & Buttons */
+        h2 { color: var(--soft-purple); font-size: 1.4rem; margin-bottom: 10px; }
+        p { color: #888; font-size: 0.9rem; }
 
         .btn {
-            padding: 15px 30px;
-            background: white;
-            color: var(--accent);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: #f0c4cf; border: none; padding: 12px 25px;
+            border-radius: 20px; color: #8d5e6b; font-weight: bold;
+            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: 0.3s; margin-top: 15px;
+        }
+        .btn:hover { transform: scale(1.05); background: #eab7c3; }
+
+        /* Interactive Elements */
+        .cake-img { width: 200px; cursor: pointer; transition: 0.3s; }
+        .hidden { display: none; }
+        
+        .balloon-wrap { display: flex; gap: 15px; margin: 20px 0; }
+        .balloon {
+            width: 45px; height: 60px; border-radius: 50%;
+            cursor: pointer; transition: 0.2s; position: relative;
+        }
+        .balloon::after {
+            content: ''; position: absolute; bottom: -15px; left: 50%;
+            width: 1px; height: 20px; background: #ccc;
         }
 
-        .btn:hover {
-            transform: scale(1.1);
-            background: var(--accent);
-            color: white;
+        .gift-box { width: 120px; cursor: pointer; animation: wobble 2s infinite; }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes wobble {
+            0%, 100% { transform: rotate(0); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
         }
 
-        /* Page 2: Love Letter */
-        #letter {
-            background: white;
-            padding: 50px;
+        /* Decorative Bunting */
+        .bunting {
+            position: absolute; top: 0; width: 100%;
+            height: 50px; background: url('https://i.imgur.com/GisLh6e.png') repeat-x;
+            background-size: contain; z-index: 10;
         }
-
-        .letter-content {
-            max-width: 600px;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            font-style: italic;
-            border-left: 3px solid var(--primary-pink);
-            padding-left: 30px;
-        }
-
-        /* Page 3: The Surprise List */
-        #surprises {
-            background: #fff5f7;
-        }
-
-        .reasons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            width: 80%;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            transition: 0.3s;
-        }
-
-        .card:hover { transform: translateY(-10px); color: var(--accent); }
-
     </style>
 </head>
 <body>
 
-    <div class="hearts" id="heartContainer"></div>
+<div class="phone-frame">
+    <div class="bunting"></div>
 
-    <section id="hero">
-        <h1>Happy Birthday, [Name]!</h1>
-        <p style="font-size: 1.5rem; color: white;">To the woman who holds my heart...</p>
-        <br>
-        <a href="#letter" class="btn">Open Your Present 🎁</a>
-    </section>
+    <div class="screen active" id="step1">
+        <img src="https://i.imgur.com/vD0qY8p.png" width="120" alt="Panda">
+        <h2>A Cutiepie was born today, 21 years ago!</h2>
+        <p>Yes, it's YOU! A little surprise awaits...</p>
+        <button class="btn" onclick="showStep('step2')">🎁 Start the surprise</button>
+    </div>
 
-    <section id="letter">
-        <h2 style="font-family: 'Dancing Script'; font-size: 3rem; color: var(--accent);">My Dearest,</h2>
-        <div class="letter-content">
-            "They say the world is huge, but my whole world is standing right in front of me. Every day with you feels like a gift I never expected but always needed. Your laugh is my favorite song, and your heart is my favorite place to be. Today is about you, but I’m the lucky one because I get to celebrate it by your side."
-            <br><br>
-            <strong>Forever Yours.</strong>
+    <div class="screen" id="step2">
+        <img src="https://i.imgur.com/83uD1E7.png" id="cake" class="cake-img" alt="Cake">
+        <button class="btn" id="lightBtn" onclick="lightCandle()">🕯️ Light the Candle</button>
+        <div id="cakeNext" class="hidden">
+            <h2 style="margin-top:15px">Happy Birthday, Cutiepie!</h2>
+            <button class="btn" onclick="showStep('step3')">Pop the Balloons →</button>
         </div>
-        <br><br>
-        <a href="#surprises" class="btn">One More Thing... ✨</a>
-    </section>
+    </div>
 
-    <section id="surprises">
-        <h2 style="font-family: 'Dancing Script'; font-size: 3rem;">3 Things I Love About You</h2>
-        <div class="reasons-grid">
-            <div class="card">
-                <h3>Your Smile</h3>
-                <p>It lights up the darkest rooms and instantly fixes my worst days.</p>
-            </div>
-            <div class="card">
-                <h3>Your Kindness</h3>
-                <p>The way you care for others inspires me to be a better man every day.</p>
-            </div>
-            <div class="card">
-                <h3>Our Future</h3>
-                <p>Because every dream I have now includes you in it.</p>
-            </div>
+    <div class="screen" id="step3">
+        <h2>Pop all 4 balloons</h2>
+        <div class="balloon-wrap">
+            <div class="balloon" onclick="pop(this)" style="background:#ffafbd"></div>
+            <div class="balloon" onclick="pop(this)" style="background:#ffc3a0"></div>
+            <div class="balloon" onclick="pop(this)" style="background:#c2e9fb"></div>
+            <div class="balloon" onclick="pop(this)" style="background:#d4fc79"></div>
         </div>
-        <br><br>
-        <p style="font-style: italic;">Let's make this year your best one yet!</p>
-    </section>
+        <div id="balloonResult" class="hidden">
+            <h2 style="color:var(--soft-pink)">You are a Cutiee</h2>
+            <button class="btn" onclick="showStep('step4')">Next →</button>
+        </div>
+    </div>
 
-    <script>
-        // Create falling hearts
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.innerHTML = '❤️';
-            heart.style.position = 'absolute';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.top = '-20px';
-            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            heart.style.opacity = Math.random();
-            heart.style.transform = `rotate(${Math.random() * 360}deg)`;
-            heart.style.transition = 'top 5s linear';
-            
-            document.getElementById('heartContainer').appendChild(heart);
+    <div class="screen" id="step4">
+        <h2>Some Sweet Moments</h2>
+        <p>(Swipe for more)</p>
+        <div style="background:white; padding:10px; border-radius:20px; margin: 15px 0;">
+            <img src="https://i.imgur.com/0u7l3m8.png" width="220" style="border-radius:15px;">
+        </div>
+        <button class="btn" onclick="showStep('step5')">✉️ Open My Message</button>
+    </div>
 
-            setTimeout(() => {
-                heart.style.top = '100vh';
-            }, 100);
+    <div class="screen" id="step5">
+        <h2>A Special Message</h2>
+        <p>Tap to open</p>
+        <div style="background:#fff0f3; padding:20px; border-radius:15px; border:2px dashed var(--soft-pink);">
+             <h3 style="color:var(--soft-pink); font-family: 'Dancing Script', cursive;">Happy Birthday to you</h3>
+             <p style="color:#555; font-style:italic;">"You make every day brighter just by being in it. I'm so lucky to have you."</p>
+        </div>
+        <button class="btn" onclick="showStep('step6')">Next →</button>
+    </div>
 
-            setTimeout(() => {
-                heart.remove();
-            }, 6000);
+    <div class="screen" id="step6">
+        <h2>One Last Thing...</h2>
+        <img src="https://i.imgur.com/pYxP7pC.png" class="gift-box" onclick="showStep('step7')" alt="Gift">
+        <p>Tap the gift</p>
+    </div>
+
+    <div class="screen" id="step7">
+        <img src="https://i.imgur.com/kS9YhGv.png" width="120">
+        <h2>Lots of love for you ❤️</h2>
+        <p>Once again, Happy Birthday! Hope you loved your surprise.</p>
+        <button class="btn" onclick="location.reload()">↺ Replay</button>
+    </div>
+
+</div>
+
+<script>
+    function showStep(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function lightCandle() {
+        document.getElementById('cake').src = "https://i.imgur.com/S9SjPPr.png"; // Lit cake image
+        document.getElementById('lightBtn').classList.add('hidden');
+        document.getElementById('cakeNext').classList.remove('hidden');
+    }
+
+    let pops = 0;
+    function pop(el) {
+        el.style.transform = "scale(0)";
+        el.style.opacity = "0";
+        el.style.pointerEvents = "none";
+        pops++;
+        if(pops === 4) {
+            document.getElementById('balloonResult').classList.remove('hidden');
         }
+    }
+</script>
 
-        setInterval(createHeart, 300);
-    </script>
 </body>
 </html>
