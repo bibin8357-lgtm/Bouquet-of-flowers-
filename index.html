@@ -3,267 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bouquet for My Love 💐</title>
+    <title>Happy Birthday, My Love</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:italic,wght@400;700&family=Montserrat:wght@300&display=swap" rel="stylesheet">
     <style>
         :root {
-            --soft-pink: #fff0f3;
-            --deep-rose: #c9184a;
-            --canvas-bg: #ffffff;
+            --primary-pink: #ffafbd;
+            --deep-rose: #ffc3a0;
+            --text-color: #4a4a4a;
+            --accent: #d63384;
         }
 
-        body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #fceef5 0%, #e8d7ff 100%);
+        body, html {
             margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+            background: linear-gradient(135deg, var(--primary-pink), var(--deep-rose));
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* Floating Hearts Animation */
+        .hearts {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Sections */
+        section {
             min-height: 100vh;
-            color: #4a4a4a;
-        }
-
-        .header {
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .header h1 { font-size: 2.5rem; color: var(--deep-rose); margin: 0; font-weight: 300; }
-        .header p { font-style: italic; color: #7a7a7a; }
-
-        .workspace {
-            display: flex;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 40px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
-            gap: 40px;
-            margin-bottom: 50px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        /* Canvas Style */
-        .canvas-container {
-            position: relative;
-            background: var(--canvas-bg);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border: 8px solid white;
-        }
-
-        #bouquetCanvas {
-            cursor: move;
-            border-radius: 12px;
-        }
-
-        /* Controls Style */
-        .controls {
-            width: 350px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-        }
-
-        .tool-group {
-            background: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
             padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
 
-        .tool-group h3 {
-            margin: 0 0 15px 0;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #b5838d;
+        /* Page 1: Hero */
+        #hero {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
         }
 
-        .item-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-
-        .asset-item {
-            border: 2px solid transparent;
-            border-radius: 12px;
-            padding: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-            background: #fdfdfd;
-        }
-
-        .asset-item:hover {
-            border-color: var(--deep-rose);
-            transform: scale(1.1);
-        }
-
-        .asset-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .action-bar {
-            display: flex;
-            gap: 10px;
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 5rem;
+            color: white;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
         }
 
         .btn {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 30px;
+            padding: 15px 30px;
+            background: white;
+            color: var(--accent);
+            text-decoration: none;
+            border-radius: 50px;
             font-weight: bold;
-            cursor: pointer;
             transition: 0.3s;
-            text-transform: uppercase;
-            font-size: 0.8rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        .btn-save { background: var(--deep-rose); color: white; }
-        .btn-clear { background: #eee; color: #666; }
-        .btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        .btn:hover {
+            transform: scale(1.1);
+            background: var(--accent);
+            color: white;
+        }
 
-        .tip { font-size: 0.75rem; color: #aaa; text-align: center; }
+        /* Page 2: Love Letter */
+        #letter {
+            background: white;
+            padding: 50px;
+        }
+
+        .letter-content {
+            max-width: 600px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            font-style: italic;
+            border-left: 3px solid var(--primary-pink);
+            padding-left: 30px;
+        }
+
+        /* Page 3: The Surprise List */
+        #surprises {
+            background: #fff5f7;
+        }
+
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 80%;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .card:hover { transform: translateY(-10px); color: var(--accent); }
 
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>Create Your Eternal Bouquet</h1>
-    <p>Hand-pick each flower to create a digital masterpiece</p>
-</div>
+    <div class="hearts" id="heartContainer"></div>
 
-<div class="workspace">
-    <div class="canvas-container">
-        <canvas id="bouquetCanvas" width="500" height="600"></canvas>
-    </div>
+    <section id="hero">
+        <h1>Happy Birthday, [Name]!</h1>
+        <p style="font-size: 1.5rem; color: white;">To the woman who holds my heart...</p>
+        <br>
+        <a href="#letter" class="btn">Open Your Present 🎁</a>
+    </section>
 
-    <div class="controls">
-        <div class="tool-group">
-            <h3>🌸 Digital Flowers</h3>
-            <div class="item-grid">
-                <div class="asset-item" onclick="addItem('https://i.ibb.co/LkvmNdb/red-rose.png', 180)">
-                    <img src="https://i.ibb.co/LkvmNdb/red-rose.png" alt="Rose">
-                </div>
-                <div class="asset-item" onclick="addItem('https://i.ibb.co/9Vsy97m/white-lily.png', 200)">
-                    <img src="https://i.ibb.co/9Vsy97m/white-lily.png" alt="Lily">
-                </div>
-                <div class="asset-item" onclick="addItem('https://i.ibb.co/m0f6vX5/daisy.png', 150)">
-                    <img src="https://i.ibb.co/m0f6vX5/daisy.png" alt="Daisy">
-                </div>
+    <section id="letter">
+        <h2 style="font-family: 'Dancing Script'; font-size: 3rem; color: var(--accent);">My Dearest,</h2>
+        <div class="letter-content">
+            "They say the world is huge, but my whole world is standing right in front of me. Every day with you feels like a gift I never expected but always needed. Your laugh is my favorite song, and your heart is my favorite place to be. Today is about you, but I’m the lucky one because I get to celebrate it by your side."
+            <br><br>
+            <strong>Forever Yours.</strong>
+        </div>
+        <br><br>
+        <a href="#surprises" class="btn">One More Thing... ✨</a>
+    </section>
+
+    <section id="surprises">
+        <h2 style="font-family: 'Dancing Script'; font-size: 3rem;">3 Things I Love About You</h2>
+        <div class="reasons-grid">
+            <div class="card">
+                <h3>Your Smile</h3>
+                <p>It lights up the darkest rooms and instantly fixes my worst days.</p>
+            </div>
+            <div class="card">
+                <h3>Your Kindness</h3>
+                <p>The way you care for others inspires me to be a better man every day.</p>
+            </div>
+            <div class="card">
+                <h3>Our Future</h3>
+                <p>Because every dream I have now includes you in it.</p>
             </div>
         </div>
+        <br><br>
+        <p style="font-style: italic;">Let's make this year your best one yet!</p>
+    </section>
 
-        <div class="tool-group">
-            <h3>🌿 Greenery & Buds</h3>
-            <div class="item-grid">
-                <div class="asset-item" onclick="addItem('https://i.ibb.co/vY8mXF7/eucalyptus.png', 220)">
-                    <img src="https://i.ibb.co/vY8mXF7/eucalyptus.png" alt="Leaf">
-                </div>
-                <div class="asset-item" onclick="addItem('https://i.ibb.co/p33XFfK/bud.png', 120)">
-                    <img src="https://i.ibb.co/p33XFfK/bud.png" alt="Bud">
-                </div>
-            </div>
-        </div>
+    <script>
+        // Create falling hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.style.position = 'absolute';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '-20px';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.opacity = Math.random();
+            heart.style.transform = `rotate(${Math.random() * 360}deg)`;
+            heart.style.transition = 'top 5s linear';
+            
+            document.getElementById('heartContainer').appendChild(heart);
 
-        <div class="tool-group">
-            <h3>🎀 Finishing Touches</h3>
-            <div class="item-grid">
-                <div class="asset-item" onclick="addItem('https://i.ibb.co/0V0fK88/wrapper.png', 450)">
-                    <img src="https://i.ibb.co/0V0fK88/wrapper.png" alt="Wrap">
-                </div>
-                <div class="asset-item" onclick="addItem('https://i.ibb.co/5YmX6fH/ribbon.png', 180)">
-                    <img src="https://i.ibb.co/5YmX6fH/ribbon.png" alt="Ribbon">
-                </div>
-            </div>
-        </div>
+            setTimeout(() => {
+                heart.style.top = '100vh';
+            }, 100);
 
-        <div class="action-bar">
-            <button class="btn btn-clear" onclick="clearAll()">Reset</button>
-            <button class="btn btn-save" onclick="download()">Download Image</button>
-        </div>
-        <p class="tip">Tip: Elements are layered in the order you click them!</p>
-    </div>
-</div>
-
-<script>
-    const canvas = document.getElementById('bouquetCanvas');
-    const ctx = canvas.getContext('2d');
-    let items = [];
-    let selectedItem = null;
-
-    function addItem(url, size) {
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.src = url;
-        img.onload = () => {
-            const newItem = {
-                img,
-                x: (canvas.width - size) / 2,
-                y: (canvas.height - size) / 2,
-                size,
-                isDragging: false
-            };
-            items.push(newItem);
-            render();
-        };
-    }
-
-    function render() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // Draw wrapper first if it exists to keep it in back, or just use natural order
-        items.forEach(item => {
-            ctx.drawImage(item.img, item.x, item.y, item.size, item.size);
-        });
-    }
-
-    // Interaction Logic
-    canvas.onmousedown = (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-
-        for (let i = items.length - 1; i >= 0; i--) {
-            const item = items[i];
-            if (mouseX > item.x && mouseX < item.x + item.size &&
-                mouseY > item.y && mouseY < item.y + item.size) {
-                selectedItem = item;
-                item.isDragging = true;
-                // Move to front when clicked
-                items.push(items.splice(i, 1)[0]);
-                break;
-            }
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
         }
-    };
 
-    window.onmousemove = (e) => {
-        if (selectedItem && selectedItem.isDragging) {
-            const rect = canvas.getBoundingClientRect();
-            selectedItem.x = e.clientX - rect.left - selectedItem.size / 2;
-            selectedItem.y = e.clientY - rect.top - selectedItem.size / 2;
-            render();
-        }
-    };
-
-    window.onmouseup = () => {
-        if (selectedItem) selectedItem.isDragging = false;
-        selectedItem = null;
-    };
-
-    function clearAll() { items = []; render(); }
-
-    function download() {
-        const link = document.createElement('a');
-        link.download = 'My_Digital_Bouquet.png';
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-    }
-</script>
-
+        setInterval(createHeart, 300);
+    </script>
 </body>
 </html>
