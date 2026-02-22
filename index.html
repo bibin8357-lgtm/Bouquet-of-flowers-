@@ -3,212 +3,270 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Bouquet for You</title>
+    <title>For My Beautiful Girl 🌸</title>
     <style>
         :root {
-            --pink: #ffafcc;
-            --soft-white: #f8f9fa;
-            --leaf-green: #b7e4c7;
-            --ribbon-red: #ff8fa3;
+            --bg: #fff5f7;
+            --accent: #ff8fa3;
+            --panel: #ffffff;
+            --text: #4a4a4a;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #fef1f5;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #555;
-            margin: 0;
-            padding: 20px;
+            overflow-x: hidden;
         }
 
-        h1 { color: #d63384; margin-bottom: 10px; }
-        p { margin-bottom: 20px; font-style: italic; }
+        .header {
+            text-align: center;
+            padding: 30px;
+        }
 
-        .container {
+        .header h1 { font-weight: 300; color: #ff4d6d; margin-bottom: 5px; }
+        .header p { font-style: italic; color: #888; }
+
+        .app-container {
             display: flex;
             gap: 30px;
-            max-width: 900px;
-            background: white;
-            padding: 30px;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        /* The Bouquet Display Area */
-        #bouquet-canvas {
-            width: 350px;
-            height: 450px;
-            border: 2px dashed var(--pink);
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-            background: #fff;
-            display: flex;
+            background: var(--panel);
+            padding: 25px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(255, 182, 193, 0.3);
+            margin-bottom: 50px;
+            flex-wrap: wrap;
             justify-content: center;
-            align-items: flex-end;
-            padding-bottom: 20px;
         }
 
-        .item-layer {
-            position: absolute;
-            transition: all 0.5s ease;
-            text-align: center;
-            font-size: 3rem;
-            cursor: move;
+        /* Canvas Area */
+        .canvas-wrapper {
+            position: relative;
+            background: #fafafa;
+            border-radius: 20px;
+            border: 2px dashed #ffc2d1;
+            overflow: hidden;
         }
 
-        /* Controls Area */
-        .controls {
-            flex: 1;
+        #bouquetCanvas {
+            cursor: grab;
+            touch-action: none;
+        }
+
+        /* UI Controls */
+        .menu {
+            width: 320px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        .category {
+            background: #fff0f3;
+            padding: 15px;
+            border-radius: 15px;
         }
 
-        label { font-weight: bold; color: #ff758f; }
+        .category-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            color: #ff4d6d;
+            font-weight: bold;
+        }
 
-        select, button {
-            padding: 10px;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .item {
+            background: white;
+            border: 1px solid #ffe3e8;
             border-radius: 10px;
-            border: 1px solid #ddd;
-            outline: none;
+            padding: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        button {
-            background-color: var(--pink);
-            color: white;
+        .item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.2);
+            border-color: #ff8fa3;
+        }
+
+        .item img { width: 100%; height: auto; border-radius: 5px; }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
             border: none;
+            border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
-            transition: transform 0.2s;
+            transition: 0.3s;
         }
 
-        button:hover {
-            background-color: #ff8fa3;
-            transform: scale(1.05);
-        }
+        .btn-save { background: #ff4d6d; color: white; }
+        .btn-clear { background: #f0f0f0; color: #666; }
+        .btn:hover { opacity: 0.8; transform: scale(1.02); }
 
-        .clear-btn { background-color: #adb5bd; margin-top: 10px; }
-
-        .item-tag {
-            display: inline-block;
-            background: #fff0f3;
-            padding: 5px 10px;
-            border-radius: 15px;
+        .hint {
             font-size: 0.8rem;
-            margin: 2px;
+            color: #aaa;
+            text-align: center;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <h1>For My Favorite Person 🌸</h1>
-    <p>Pick your favorites and build your own bouquet!</p>
+<div class="header">
+    <h1>Design Your Dream Bouquet</h1>
+    <p>Click an item to add, then drag to arrange your masterpiece</p>
+</div>
 
-    <div class="container">
-        <div id="bouquet-canvas">
-            <div id="wrap-display" style="position:absolute; bottom:0; width:100%; height:60%; z-index:1; opacity:0.6;"></div>
-            <div id="ribbon-display" style="position:absolute; bottom:50px; z-index:10; font-size: 2rem;"></div>
-        </div>
-
-        <div class="controls">
-            <div class="control-group">
-                <label>Choose a Flower:</label>
-                <select id="flower-select">
-                    <option value="🌹">Red Rose</option>
-                    <option value="🌸">Cherry Blossom</option>
-                    <option value="🌻">Sunflower</option>
-                    <option value="🌷">Tulip</option>
-                    <option value="🌼">Daisy</option>
-                </select>
-                <button onclick="addItem('flower')">Add Flower</button>
-            </div>
-
-            <div class="control-group">
-                <label>Add Greenery:</label>
-                <select id="leaf-select">
-                    <option value="🌿">Soft Leaf</option>
-                    <option value="🍃">Fluttering Leaves</option>
-                    <option value="🌱">Small Bud</option>
-                </select>
-                <button onclick="addItem('leaf')">Add Leaf/Bud</button>
-            </div>
-
-            <div class="control-group">
-                <label>Wrapping Paper Color:</label>
-                <select id="wrap-select" onchange="updateWrap()">
-                    <option value="none">None</option>
-                    <option value="#ffc8dd">Baby Pink</option>
-                    <option value="#bde0fe">Sky Blue</option>
-                    <option value="#fdf0d5">Cream Parchment</option>
-                    <option value="#cdb4db">Lavender</option>
-                </select>
-            </div>
-
-            <div class="control-group">
-                <label>Ribbon:</label>
-                <select id="ribbon-select" onchange="updateRibbon()">
-                    <option value="">No Ribbon</option>
-                    <option value="🎀">Classic Pink Bow</option>
-                    <option value="🎗️">Yellow Ribbon</option>
-                    <option value="💝">Heart Ribbon</option>
-                </select>
-            </div>
-
-            <button class="clear-btn" onclick="clearBouquet()">Start Over</button>
-        </div>
+<div class="app-container">
+    <div class="canvas-wrapper">
+        <canvas id="bouquetCanvas" width="500" height="600"></canvas>
     </div>
 
-    <script>
-        function addItem(type) {
-            const canvas = document.getElementById('bouquet-canvas');
-            const selectId = type === 'flower' ? 'flower-select' : 'leaf-select';
-            const val = document.getElementById(selectId).value;
-            
-            const item = document.createElement('div');
-            item.className = 'item-layer';
-            item.innerHTML = val;
-            
-            // Randomize position slightly for a natural look
-            const randomX = Math.floor(Math.random() * 200) + 75;
-            const randomY = Math.floor(Math.random() * 150) + 100;
-            const randomRotate = Math.floor(Math.random() * 40) - 20;
+    <div class="menu">
+        <div class="category">
+            <div class="category-title">🌸 Flowers</div>
+            <div class="grid">
+                <div class="item" onclick="addAsset('rose')"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMzAgNTAgQzMwIDIwIDcwIDIwIDcwIDUwIEM3MCA4MCAzMCA4MCAzMCA1MCIgZmlsbD0iI2U2Mzk0NiIvPjxwYXRoIGQ9Ik00MCA0NSBDNDAgMzAgNjAgMzAgNjAgNDUgQzYwIDYwIDQwIDYwIDQwIDQ1IiBmaWxsPSIjYmI0NzRkIi8+PHBhdGggZD0iTTUwIDcwIEw1MCA5NSIgc3Ryb2tlPSIjM2E1YTAxIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4="></div>
+                <div class="item" onclick="addAsset('lily')"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMDUwIDIwIEM2MCA0MCA2MCA2MCA1MCA4MCBDNDAgNjAgNDAgNDAgNTAgMjAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNlZWUiLz48cGF0aCBkPSJNMjAgNTAgQzQwIDQwIDYwIDQwIDgwIDUwIEM2MCA2MCA0MCA2MCAyMCA1MCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2VlZSIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjUiIGZpbGw9IiNmNGRjNWUiLz48L3N2Zz4="></div>
+                <div class="item" onclick="addAsset('daisy')"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIxNSIgZmlsbD0iI2ZmZDE2NiIvPjxnIGZpbGw9IndoaXRlIiBzdHJva2U9IiNkZGQiPjxlbGxpcHNlIGN4PSI1MCIgY3k9IjIwIiByeD0iNSIgcnk9IjE1Ii8+PGVsbGlwc2UgY3g9IjUwIiBjeT0iODAiIHJ4PSI1IiByeT0iMTUiLz48ZWxsaXBzZSBjeD0iMjAiIGN5PSI1MCIgcng9IjE1IiByeT0iNSIvPjxlbGxpcHNlIGN4PSI4MCIgY3k9IjUwIiByeD0iMTUiIHJ5PSI1Ii8+PC9nPjwvc3ZnPg=="></div>
+            </div>
+        </div>
 
-            item.style.left = randomX + 'px';
-            item.style.top = randomY + 'px';
-            item.style.transform = `rotate(${randomRotate}deg)`;
-            item.style.zIndex = "5";
+        <div class="category">
+            <div class="category-title">🌿 Leaves & Buds</div>
+            <div class="grid">
+                <div class="item" onclick="addAsset('leaf')"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAgODAgQzMwIDYwIDcwIDYwIDkwIDEwIEM2MCAzMCA2MCA3MCAxMCA4MCIgZmlsbD0iIzY3OTQzNiIvPjwvc3ZnPg=="></div>
+                <div class="item" onclick="addAsset('bud')"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZWxsaXBzZSBjeD0iNTAiIGN5PSI0MCIgcng9IjEwIiByeT0iMjAiIGZpbGw9IiNhY2U0YTgiLz48cGF0aCBkPSJNMDUwIDYwIEw1MCA5MCIgc3Ryb2tlPSIjM2E1YTAxIi8+PC9zdmc+"></div>
+            </div>
+        </div>
 
-            canvas.appendChild(item);
+        <div class="category">
+            <div class="category-title">🎀 Wrap & Ribbon</div>
+            <div class="grid">
+                <div class="item" onclick="addAsset('wrap')"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjAgODAgTDUwIDEwIEw4MCA4MCBaIiBmaWxsPSIjZjhlMWYyIiBvcGFjaXR5PSIwLjciLz48L3N2Zz4="></div>
+                <div class="item" onclick="addAsset('ribbon')"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMzAgNTAgQzEwIDQwIDEwIDYwIDMwIDUwIE03MCA1MCBDOTAgNDAgOTAgNjAgNzAgNTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmNGQ2ZCIgc3Ryb2tlLXdpZHRoPSI0Ii8+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNSIgZmlsbD0iI2ZmNGQ2ZCIvPjwvc3ZnPg=="></div>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn btn-clear" onclick="clearCanvas()">Clear</button>
+            <button class="btn btn-save" onclick="saveImage()">Download</button>
+        </div>
+        <p class="hint">Items stack based on order of placement!</p>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('bouquetCanvas');
+    const ctx = canvas.getContext('2d');
+    let layers = [];
+    let selectedIdx = -1;
+
+    // Drawing assets as SVG strings for high-quality digital look
+    const assetLibrary = {
+        rose: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjZTYzOTQ2IiBzdHJva2U9IiNhMzIxMmQiIHN0cm9rZS13aWR0aD0iMC41Ij48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIyNSIvPjxwYXRoIGQ9Ik0zNSAzNSBDNDAgMjAgNjAgMjAgNjUgMzUgQzgwIDQwIDgwIDYwIDY1IDY1IEM2MCA4MCA0MCA4MCAzNSA2NSBDMjAgNjAgMjAgNDAgMzUgMzUiLz48cGF0aCBkPSJNNDAgNDUgQzQ1IDM1IDU1IDM1IDYwIDQ1IEM2NSA1NSA1NSA2NSA0NSA2MCBDMzUgNTUgMzUgNDUgNDAgNDUiIGZpbGw9IiNiYjQ3NGQiLz48L2c+PHBhdGggZD0iTTUwIDc1IEw1MCA5NSIgc3Ryb2tlPSIjM2E1YTAxIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=',
+        lily: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNkZGRkZGQiPjxwYXRoIGQ9Ik01MCA1MCBMNTAgMTAgQzYwIDMwIDYwIDMwIDUwIDUwIEM0MCAzMCA0MCAzMCA1MCAxMCIvPjxwYXRoIGQ9Ik01MCA1MCBMOTAgNTAgQzcwIDYwIDcwIDYwIDUwIDUwIEM3MCA0MCA3MCA0MCA5MCA1MCIvPjxwYXRoIGQ9Ik01MCA1MCBMNTAgOTAgQzQwIDcwIDQwIDcwIDUwIDUwIEM2MCA3MCA2MCA3MCA1MCA5MCIvPjxwYXRoIGQ9Ik01MCA1MCBMMTAgNTAgQzMwIDQwIDMwIDQwIDUwIDUwIEMzMCA2MCAzMCA2MCAxMCA1MCIvPjwvZz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0IiBmaWxsPSIjZjRkYzVlIi8+PC9zdmc+',
+        daisy: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjZWVlIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjMwIiByPSIxMCIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iNzAiIHI9IjEwIi8+PGNpcmNsZSBjeD0iMzAiIGN5PSI1MCIgcj0iMTAiLz48Y2lyY2xlIGN4PSI3MCIgY3k9IjUwIiByPSIxMCIvPjxjaXJjbGUgY3g9IjM1IiBjeT0iMzUiIHI9IjEwIi8+PGNpcmNsZSBjeD0iNjUiIGN5PSI2NSIgcj0iMTAiLz48Y2lyY2xlIGN4PSIzNSIgY3k9IjY1IiByPSIxMCIvPjxjaXJjbGUgY3g9IjY1IiBjeT0iMzUiIHI9IjEwIi8+PC9nPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjEyIiBmaWxsPSIjZmZkMTY2Ii8+PC9zdmc+',
+        leaf: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAgOTAgQzEwIDYwIDYwIDYwIDkwIDEwIEM2MCAzMCAzMCAzMCAxMCA5MCIgZmlsbD0iIzY3OTQzNiIgc3Ryb2tlPSIjM2E1YTAxIi8+PC9zdmc+',
+        bud: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMDUwIDQwIEw1MCA5MCIgc3Ryb2tlPSIjM2E1YTAxIiBzdHJva2Utd2lkdGg9IjIiLz48ZWxsaXBzZSBjeD0iNTAiIGN5PSIzMCIgcng9IjgiIHJ5PSIxNSIgZmlsbD0iI2FjZTRhOCIvPjwvc3ZnPg==',
+        wrap: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjAgODAgTDUwIDEwIEw4MCA4MCBDODAgOTAgMjAgOTAgMjAgODBaIiBmaWxsPSIjZjhlMWYyIiBvcGFjaXR5PSIwLjYiIHN0cm9rZT0iI2ZmYzJkMSIvPjwvc3ZnPg==',
+        ribbon: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBzdHJva2U9IiNmZjRkNmQiIHN0cm9rZS13aWR0aD0iNCI+PHBhdGggZD0iTTUwIDUwIEMzMCAyMCAxMCAyMCAzMCA1MCBDMTAgODAgMzAgODAgNTAgNTAiLz48cGF0aCBkPSJNMDUwIDUwIEM3MCAyMCA5MCAyMCA3MCA1MCBDOTAgODAgNzAgODAgNTAgNTAiLz48L2c+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNSIgZmlsbD0iI2ZmNGQ2ZCIvPjwvc3ZnPg=='
+    };
+
+    function addAsset(type) {
+        const img = new Image();
+        img.src = assetLibrary[type];
+        img.onload = () => {
+            layers.push({
+                img: img,
+                x: 175,
+                y: 200,
+                size: type === 'wrap' ? 300 : 150,
+                dragging: false
+            });
+            draw();
+        };
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        layers.forEach(layer => {
+            ctx.drawImage(layer.img, layer.x, layer.y, layer.size, layer.size);
+        });
+    }
+
+    // Interactive Dragging
+    canvas.addEventListener('mousedown', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+
+        for (let i = layers.length - 1; i >= 0; i--) {
+            const l = layers[i];
+            if (mx > l.x && mx < l.x + l.size && my > l.y && my < l.y + l.size) {
+                selectedIdx = i;
+                l.dragging = true;
+                // Move wrap to bottom, others to top
+                if (layers[i].size < 300) {
+                    layers.push(layers.splice(i, 1)[0]);
+                    selectedIdx = layers.length - 1;
+                }
+                canvas.style.cursor = 'grabbing';
+                break;
+            }
         }
+    });
 
-        function updateWrap() {
-            const color = document.getElementById('wrap-select').value;
-            const wrap = document.getElementById('wrap-display');
-            wrap.style.backgroundColor = color;
-            wrap.style.borderRadius = "100% 100% 20px 20px";
-        }
+    window.addEventListener('mousemove', (e) => {
+        if (selectedIdx === -1) return;
+        const rect = canvas.getBoundingClientRect();
+        const l = layers[selectedIdx];
+        l.x = e.clientX - rect.left - l.size / 2;
+        l.y = e.clientY - rect.top - l.size / 2;
+        draw();
+    });
 
-        function updateRibbon() {
-            const ribbon = document.getElementById('ribbon-select').value;
-            document.getElementById('ribbon-display').innerHTML = ribbon;
-        }
+    window.addEventListener('mouseup', () => {
+        if (selectedIdx !== -1) layers[selectedIdx].dragging = false;
+        selectedIdx = -1;
+        canvas.style.cursor = 'grab';
+    });
 
-        function clearBouquet() {
-            const canvas = document.getElementById('bouquet-canvas');
-            const items = canvas.querySelectorAll('.item-layer');
-            items.forEach(item => item.remove());
-            document.getElementById('wrap-display').style.backgroundColor = 'transparent';
-            document.getElementById('ribbon-display').innerHTML = '';
-        }
-    </script>
+    function clearCanvas() { layers = []; draw(); }
+    function saveImage() {
+        const link = document.createElement('a');
+        link.download = 'My_Custom_Bouquet.png';
+        link.href = canvas.toDataURL();
+        link.click();
+    }
+
+    // Initial item
+    addAsset('wrap');
+</script>
+
 </body>
 </html>
