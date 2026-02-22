@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Bouquet for You</title>
+    <style>
+        :root {
+            --pink: #ffafcc;
+            --soft-white: #f8f9fa;
+            --leaf-green: #b7e4c7;
+            --ribbon-red: #ff8fa3;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fef1f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #555;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 { color: #d63384; margin-bottom: 10px; }
+        p { margin-bottom: 20px; font-style: italic; }
+
+        .container {
+            display: flex;
+            gap: 30px;
+            max-width: 900px;
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        /* The Bouquet Display Area */
+        #bouquet-canvas {
+            width: 350px;
+            height: 450px;
+            border: 2px dashed var(--pink);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 20px;
+        }
+
+        .item-layer {
+            position: absolute;
+            transition: all 0.5s ease;
+            text-align: center;
+            font-size: 3rem;
+            cursor: move;
+        }
+
+        /* Controls Area */
+        .controls {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label { font-weight: bold; color: #ff758f; }
+
+        select, button {
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            outline: none;
+        }
+
+        button {
+            background-color: var(--pink);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #ff8fa3;
+            transform: scale(1.05);
+        }
+
+        .clear-btn { background-color: #adb5bd; margin-top: 10px; }
+
+        .item-tag {
+            display: inline-block;
+            background: #fff0f3;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>For My Favorite Person 🌸</h1>
+    <p>Pick your favorites and build your own bouquet!</p>
+
+    <div class="container">
+        <div id="bouquet-canvas">
+            <div id="wrap-display" style="position:absolute; bottom:0; width:100%; height:60%; z-index:1; opacity:0.6;"></div>
+            <div id="ribbon-display" style="position:absolute; bottom:50px; z-index:10; font-size: 2rem;"></div>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>Choose a Flower:</label>
+                <select id="flower-select">
+                    <option value="🌹">Red Rose</option>
+                    <option value="🌸">Cherry Blossom</option>
+                    <option value="🌻">Sunflower</option>
+                    <option value="🌷">Tulip</option>
+                    <option value="🌼">Daisy</option>
+                </select>
+                <button onclick="addItem('flower')">Add Flower</button>
+            </div>
+
+            <div class="control-group">
+                <label>Add Greenery:</label>
+                <select id="leaf-select">
+                    <option value="🌿">Soft Leaf</option>
+                    <option value="🍃">Fluttering Leaves</option>
+                    <option value="🌱">Small Bud</option>
+                </select>
+                <button onclick="addItem('leaf')">Add Leaf/Bud</button>
+            </div>
+
+            <div class="control-group">
+                <label>Wrapping Paper Color:</label>
+                <select id="wrap-select" onchange="updateWrap()">
+                    <option value="none">None</option>
+                    <option value="#ffc8dd">Baby Pink</option>
+                    <option value="#bde0fe">Sky Blue</option>
+                    <option value="#fdf0d5">Cream Parchment</option>
+                    <option value="#cdb4db">Lavender</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>Ribbon:</label>
+                <select id="ribbon-select" onchange="updateRibbon()">
+                    <option value="">No Ribbon</option>
+                    <option value="🎀">Classic Pink Bow</option>
+                    <option value="🎗️">Yellow Ribbon</option>
+                    <option value="💝">Heart Ribbon</option>
+                </select>
+            </div>
+
+            <button class="clear-btn" onclick="clearBouquet()">Start Over</button>
+        </div>
+    </div>
+
+    <script>
+        function addItem(type) {
+            const canvas = document.getElementById('bouquet-canvas');
+            const selectId = type === 'flower' ? 'flower-select' : 'leaf-select';
+            const val = document.getElementById(selectId).value;
+            
+            const item = document.createElement('div');
+            item.className = 'item-layer';
+            item.innerHTML = val;
+            
+            // Randomize position slightly for a natural look
+            const randomX = Math.floor(Math.random() * 200) + 75;
+            const randomY = Math.floor(Math.random() * 150) + 100;
+            const randomRotate = Math.floor(Math.random() * 40) - 20;
+
+            item.style.left = randomX + 'px';
+            item.style.top = randomY + 'px';
+            item.style.transform = `rotate(${randomRotate}deg)`;
+            item.style.zIndex = "5";
+
+            canvas.appendChild(item);
+        }
+
+        function updateWrap() {
+            const color = document.getElementById('wrap-select').value;
+            const wrap = document.getElementById('wrap-display');
+            wrap.style.backgroundColor = color;
+            wrap.style.borderRadius = "100% 100% 20px 20px";
+        }
+
+        function updateRibbon() {
+            const ribbon = document.getElementById('ribbon-select').value;
+            document.getElementById('ribbon-display').innerHTML = ribbon;
+        }
+
+        function clearBouquet() {
+            const canvas = document.getElementById('bouquet-canvas');
+            const items = canvas.querySelectorAll('.item-layer');
+            items.forEach(item => item.remove());
+            document.getElementById('wrap-display').style.backgroundColor = 'transparent';
+            document.getElementById('ribbon-display').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
