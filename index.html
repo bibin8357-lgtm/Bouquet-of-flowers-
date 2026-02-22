@@ -3,269 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Beautiful Girl 🌸</title>
+    <title>Bouquet for My Love 💐</title>
     <style>
         :root {
-            --bg: #fff5f7;
-            --accent: #ff8fa3;
-            --panel: #ffffff;
-            --text: #4a4a4a;
+            --soft-pink: #fff0f3;
+            --deep-rose: #c9184a;
+            --canvas-bg: #ffffff;
         }
 
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #fceef5 0%, #e8d7ff 100%);
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            overflow-x: hidden;
+            min-height: 100vh;
+            color: #4a4a4a;
         }
 
         .header {
             text-align: center;
-            padding: 30px;
+            padding: 40px 20px;
         }
 
-        .header h1 { font-weight: 300; color: #ff4d6d; margin-bottom: 5px; }
-        .header p { font-style: italic; color: #888; }
+        .header h1 { font-size: 2.5rem; color: var(--deep-rose); margin: 0; font-weight: 300; }
+        .header p { font-style: italic; color: #7a7a7a; }
 
-        .app-container {
+        .workspace {
             display: flex;
-            gap: 30px;
-            background: var(--panel);
-            padding: 25px;
-            border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(255, 182, 193, 0.3);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+            gap: 40px;
             margin-bottom: 50px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
-        /* Canvas Area */
-        .canvas-wrapper {
+        /* Canvas Style */
+        .canvas-container {
             position: relative;
-            background: #fafafa;
+            background: var(--canvas-bg);
             border-radius: 20px;
-            border: 2px dashed #ffc2d1;
-            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 8px solid white;
         }
 
         #bouquetCanvas {
-            cursor: grab;
-            touch-action: none;
+            cursor: move;
+            border-radius: 12px;
         }
 
-        /* UI Controls */
-        .menu {
-            width: 320px;
+        /* Controls Style */
+        .controls {
+            width: 350px;
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
 
-        .category {
-            background: #fff0f3;
-            padding: 15px;
-            border-radius: 15px;
+        .tool-group {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
 
-        .category-title {
+        .tool-group h3 {
+            margin: 0 0 15px 0;
             font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            color: #ff4d6d;
-            font-weight: bold;
+            letter-spacing: 2px;
+            color: #b5838d;
         }
 
-        .grid {
+        .item-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 15px;
         }
 
-        .item {
-            background: white;
-            border: 1px solid #ffe3e8;
-            border-radius: 10px;
+        .asset-item {
+            border: 2px solid transparent;
+            border-radius: 12px;
             padding: 5px;
             cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            transition: 0.3s;
+            background: #fdfdfd;
         }
 
-        .item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.2);
-            border-color: #ff8fa3;
+        .asset-item:hover {
+            border-color: var(--deep-rose);
+            transform: scale(1.1);
         }
 
-        .item img { width: 100%; height: auto; border-radius: 5px; }
+        .asset-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
 
-        .buttons {
+        .action-bar {
             display: flex;
             gap: 10px;
-            margin-top: 10px;
         }
 
         .btn {
             flex: 1;
-            padding: 12px;
+            padding: 15px;
             border: none;
-            border-radius: 50px;
-            cursor: pointer;
+            border-radius: 30px;
             font-weight: bold;
+            cursor: pointer;
             transition: 0.3s;
-        }
-
-        .btn-save { background: #ff4d6d; color: white; }
-        .btn-clear { background: #f0f0f0; color: #666; }
-        .btn:hover { opacity: 0.8; transform: scale(1.02); }
-
-        .hint {
+            text-transform: uppercase;
             font-size: 0.8rem;
-            color: #aaa;
-            text-align: center;
-            margin-top: 10px;
         }
+
+        .btn-save { background: var(--deep-rose); color: white; }
+        .btn-clear { background: #eee; color: #666; }
+        .btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
+
+        .tip { font-size: 0.75rem; color: #aaa; text-align: center; }
+
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>Design Your Dream Bouquet</h1>
-    <p>Click an item to add, then drag to arrange your masterpiece</p>
+    <h1>Create Your Eternal Bouquet</h1>
+    <p>Hand-pick each flower to create a digital masterpiece</p>
 </div>
 
-<div class="app-container">
-    <div class="canvas-wrapper">
+<div class="workspace">
+    <div class="canvas-container">
         <canvas id="bouquetCanvas" width="500" height="600"></canvas>
     </div>
 
-    <div class="menu">
-        <div class="category">
-            <div class="category-title">🌸 Flowers</div>
-            <div class="grid">
-                <div class="item" onclick="addAsset('rose')"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMzAgNTAgQzMwIDIwIDcwIDIwIDcwIDUwIEM3MCA4MCAzMCA4MCAzMCA1MCIgZmlsbD0iI2U2Mzk0NiIvPjxwYXRoIGQ9Ik00MCA0NSBDNDAgMzAgNjAgMzAgNjAgNDUgQzYwIDYwIDQwIDYwIDQwIDQ1IiBmaWxsPSIjYmI0NzRkIi8+PHBhdGggZD0iTTUwIDcwIEw1MCA5NSIgc3Ryb2tlPSIjM2E1YTAxIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4="></div>
-                <div class="item" onclick="addAsset('lily')"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMDUwIDIwIEM2MCA0MCA2MCA2MCA1MCA4MCBDNDAgNjAgNDAgNDAgNTAgMjAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNlZWUiLz48cGF0aCBkPSJNMjAgNTAgQzQwIDQwIDYwIDQwIDgwIDUwIEM2MCA2MCA0MCA2MCAyMCA1MCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2VlZSIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjUiIGZpbGw9IiNmNGRjNWUiLz48L3N2Zz4="></div>
-                <div class="item" onclick="addAsset('daisy')"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIxNSIgZmlsbD0iI2ZmZDE2NiIvPjxnIGZpbGw9IndoaXRlIiBzdHJva2U9IiNkZGQiPjxlbGxpcHNlIGN4PSI1MCIgY3k9IjIwIiByeD0iNSIgcnk9IjE1Ii8+PGVsbGlwc2UgY3g9IjUwIiBjeT0iODAiIHJ4PSI1IiByeT0iMTUiLz48ZWxsaXBzZSBjeD0iMjAiIGN5PSI1MCIgcng9IjE1IiByeT0iNSIvPjxlbGxpcHNlIGN4PSI4MCIgY3k9IjUwIiByeD0iMTUiIHJ5PSI1Ii8+PC9nPjwvc3ZnPg=="></div>
+    <div class="controls">
+        <div class="tool-group">
+            <h3>🌸 Digital Flowers</h3>
+            <div class="item-grid">
+                <div class="asset-item" onclick="addItem('https://i.ibb.co/LkvmNdb/red-rose.png', 180)">
+                    <img src="https://i.ibb.co/LkvmNdb/red-rose.png" alt="Rose">
+                </div>
+                <div class="asset-item" onclick="addItem('https://i.ibb.co/9Vsy97m/white-lily.png', 200)">
+                    <img src="https://i.ibb.co/9Vsy97m/white-lily.png" alt="Lily">
+                </div>
+                <div class="asset-item" onclick="addItem('https://i.ibb.co/m0f6vX5/daisy.png', 150)">
+                    <img src="https://i.ibb.co/m0f6vX5/daisy.png" alt="Daisy">
+                </div>
             </div>
         </div>
 
-        <div class="category">
-            <div class="category-title">🌿 Leaves & Buds</div>
-            <div class="grid">
-                <div class="item" onclick="addAsset('leaf')"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAgODAgQzMwIDYwIDcwIDYwIDkwIDEwIEM2MCAzMCA2MCA3MCAxMCA4MCIgZmlsbD0iIzY3OTQzNiIvPjwvc3ZnPg=="></div>
-                <div class="item" onclick="addAsset('bud')"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZWxsaXBzZSBjeD0iNTAiIGN5PSI0MCIgcng9IjEwIiByeT0iMjAiIGZpbGw9IiNhY2U0YTgiLz48cGF0aCBkPSJNMDUwIDYwIEw1MCA5MCIgc3Ryb2tlPSIjM2E1YTAxIi8+PC9zdmc+"></div>
+        <div class="tool-group">
+            <h3>🌿 Greenery & Buds</h3>
+            <div class="item-grid">
+                <div class="asset-item" onclick="addItem('https://i.ibb.co/vY8mXF7/eucalyptus.png', 220)">
+                    <img src="https://i.ibb.co/vY8mXF7/eucalyptus.png" alt="Leaf">
+                </div>
+                <div class="asset-item" onclick="addItem('https://i.ibb.co/p33XFfK/bud.png', 120)">
+                    <img src="https://i.ibb.co/p33XFfK/bud.png" alt="Bud">
+                </div>
             </div>
         </div>
 
-        <div class="category">
-            <div class="category-title">🎀 Wrap & Ribbon</div>
-            <div class="grid">
-                <div class="item" onclick="addAsset('wrap')"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjAgODAgTDUwIDEwIEw4MCA4MCBaIiBmaWxsPSIjZjhlMWYyIiBvcGFjaXR5PSIwLjciLz48L3N2Zz4="></div>
-                <div class="item" onclick="addAsset('ribbon')"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMzAgNTAgQzEwIDQwIDEwIDYwIDMwIDUwIE03MCA1MCBDOTAgNDAgOTAgNjAgNzAgNTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmNGQ2ZCIgc3Ryb2tlLXdpZHRoPSI0Ii8+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNSIgZmlsbD0iI2ZmNGQ2ZCIvPjwvc3ZnPg=="></div>
+        <div class="tool-group">
+            <h3>🎀 Finishing Touches</h3>
+            <div class="item-grid">
+                <div class="asset-item" onclick="addItem('https://i.ibb.co/0V0fK88/wrapper.png', 450)">
+                    <img src="https://i.ibb.co/0V0fK88/wrapper.png" alt="Wrap">
+                </div>
+                <div class="asset-item" onclick="addItem('https://i.ibb.co/5YmX6fH/ribbon.png', 180)">
+                    <img src="https://i.ibb.co/5YmX6fH/ribbon.png" alt="Ribbon">
+                </div>
             </div>
         </div>
 
-        <div class="buttons">
-            <button class="btn btn-clear" onclick="clearCanvas()">Clear</button>
-            <button class="btn btn-save" onclick="saveImage()">Download</button>
+        <div class="action-bar">
+            <button class="btn btn-clear" onclick="clearAll()">Reset</button>
+            <button class="btn btn-save" onclick="download()">Download Image</button>
         </div>
-        <p class="hint">Items stack based on order of placement!</p>
+        <p class="tip">Tip: Elements are layered in the order you click them!</p>
     </div>
 </div>
 
 <script>
     const canvas = document.getElementById('bouquetCanvas');
     const ctx = canvas.getContext('2d');
-    let layers = [];
-    let selectedIdx = -1;
+    let items = [];
+    let selectedItem = null;
 
-    // Drawing assets as SVG strings for high-quality digital look
-    const assetLibrary = {
-        rose: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjZTYzOTQ2IiBzdHJva2U9IiNhMzIxMmQiIHN0cm9rZS13aWR0aD0iMC41Ij48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIyNSIvPjxwYXRoIGQ9Ik0zNSAzNSBDNDAgMjAgNjAgMjAgNjUgMzUgQzgwIDQwIDgwIDYwIDY1IDY1IEM2MCA4MCA0MCA4MCAzNSA2NSBDMjAgNjAgMjAgNDAgMzUgMzUiLz48cGF0aCBkPSJNNDAgNDUgQzQ1IDM1IDU1IDM1IDYwIDQ1IEM2NSA1NSA1NSA2NSA0NSA2MCBDMzUgNTUgMzUgNDUgNDAgNDUiIGZpbGw9IiNiYjQ3NGQiLz48L2c+PHBhdGggZD0iTTUwIDc1IEw1MCA5NSIgc3Ryb2tlPSIjM2E1YTAxIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=',
-        lily: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNkZGRkZGQiPjxwYXRoIGQ9Ik01MCA1MCBMNTAgMTAgQzYwIDMwIDYwIDMwIDUwIDUwIEM0MCAzMCA0MCAzMCA1MCAxMCIvPjxwYXRoIGQ9Ik01MCA1MCBMOTAgNTAgQzcwIDYwIDcwIDYwIDUwIDUwIEM3MCA0MCA3MCA0MCA5MCA1MCIvPjxwYXRoIGQ9Ik01MCA1MCBMNTAgOTAgQzQwIDcwIDQwIDcwIDUwIDUwIEM2MCA3MCA2MCA3MCA1MCA5MCIvPjxwYXRoIGQ9Ik01MCA1MCBMMTAgNTAgQzMwIDQwIDMwIDQwIDUwIDUwIEMzMCA2MCAzMCA2MCAxMCA1MCIvPjwvZz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0IiBmaWxsPSIjZjRkYzVlIi8+PC9zdmc+',
-        daisy: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjZWVlIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjMwIiByPSIxMCIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iNzAiIHI9IjEwIi8+PGNpcmNsZSBjeD0iMzAiIGN5PSI1MCIgcj0iMTAiLz48Y2lyY2xlIGN4PSI3MCIgY3k9IjUwIiByPSIxMCIvPjxjaXJjbGUgY3g9IjM1IiBjeT0iMzUiIHI9IjEwIi8+PGNpcmNsZSBjeD0iNjUiIGN5PSI2NSIgcj0iMTAiLz48Y2lyY2xlIGN4PSIzNSIgY3k9IjY1IiByPSIxMCIvPjxjaXJjbGUgY3g9IjY1IiBjeT0iMzUiIHI9IjEwIi8+PC9nPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjEyIiBmaWxsPSIjZmZkMTY2Ii8+PC9zdmc+',
-        leaf: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAgOTAgQzEwIDYwIDYwIDYwIDkwIDEwIEM2MCAzMCAzMCAzMCAxMCA5MCIgZmlsbD0iIzY3OTQzNiIgc3Ryb2tlPSIjM2E1YTAxIi8+PC9zdmc+',
-        bud: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMDUwIDQwIEw1MCA5MCIgc3Ryb2tlPSIjM2E1YTAxIiBzdHJva2Utd2lkdGg9IjIiLz48ZWxsaXBzZSBjeD0iNTAiIGN5PSIzMCIgcng9IjgiIHJ5PSIxNSIgZmlsbD0iI2FjZTRhOCIvPjwvc3ZnPg==',
-        wrap: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjAgODAgTDUwIDEwIEw4MCA4MCBDODAgOTAgMjAgOTAgMjAgODBaIiBmaWxsPSIjZjhlMWYyIiBvcGFjaXR5PSIwLjYiIHN0cm9rZT0iI2ZmYzJkMSIvPjwvc3ZnPg==',
-        ribbon: 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBzdHJva2U9IiNmZjRkNmQiIHN0cm9rZS13aWR0aD0iNCI+PHBhdGggZD0iTTUwIDUwIEMzMCAyMCAxMCAyMCAzMCA1MCBDMTAgODAgMzAgODAgNTAgNTAiLz48cGF0aCBkPSJNMDUwIDUwIEM3MCAyMCA5MCAyMCA3MCA1MCBDOTAgODAgNzAgODAgNTAgNTAiLz48L2c+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNSIgZmlsbD0iI2ZmNGQ2ZCIvPjwvc3ZnPg=='
-    };
-
-    function addAsset(type) {
+    function addItem(url, size) {
         const img = new Image();
-        img.src = assetLibrary[type];
+        img.crossOrigin = "anonymous";
+        img.src = url;
         img.onload = () => {
-            layers.push({
-                img: img,
-                x: 175,
-                y: 200,
-                size: type === 'wrap' ? 300 : 150,
-                dragging: false
-            });
-            draw();
+            const newItem = {
+                img,
+                x: (canvas.width - size) / 2,
+                y: (canvas.height - size) / 2,
+                size,
+                isDragging: false
+            };
+            items.push(newItem);
+            render();
         };
     }
 
-    function draw() {
+    function render() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        layers.forEach(layer => {
-            ctx.drawImage(layer.img, layer.x, layer.y, layer.size, layer.size);
+        // Draw wrapper first if it exists to keep it in back, or just use natural order
+        items.forEach(item => {
+            ctx.drawImage(item.img, item.x, item.y, item.size, item.size);
         });
     }
 
-    // Interactive Dragging
-    canvas.addEventListener('mousedown', (e) => {
+    // Interaction Logic
+    canvas.onmousedown = (e) => {
         const rect = canvas.getBoundingClientRect();
-        const mx = e.clientX - rect.left;
-        const my = e.clientY - rect.top;
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
 
-        for (let i = layers.length - 1; i >= 0; i--) {
-            const l = layers[i];
-            if (mx > l.x && mx < l.x + l.size && my > l.y && my < l.y + l.size) {
-                selectedIdx = i;
-                l.dragging = true;
-                // Move wrap to bottom, others to top
-                if (layers[i].size < 300) {
-                    layers.push(layers.splice(i, 1)[0]);
-                    selectedIdx = layers.length - 1;
-                }
-                canvas.style.cursor = 'grabbing';
+        for (let i = items.length - 1; i >= 0; i--) {
+            const item = items[i];
+            if (mouseX > item.x && mouseX < item.x + item.size &&
+                mouseY > item.y && mouseY < item.y + item.size) {
+                selectedItem = item;
+                item.isDragging = true;
+                // Move to front when clicked
+                items.push(items.splice(i, 1)[0]);
                 break;
             }
         }
-    });
+    };
 
-    window.addEventListener('mousemove', (e) => {
-        if (selectedIdx === -1) return;
-        const rect = canvas.getBoundingClientRect();
-        const l = layers[selectedIdx];
-        l.x = e.clientX - rect.left - l.size / 2;
-        l.y = e.clientY - rect.top - l.size / 2;
-        draw();
-    });
+    window.onmousemove = (e) => {
+        if (selectedItem && selectedItem.isDragging) {
+            const rect = canvas.getBoundingClientRect();
+            selectedItem.x = e.clientX - rect.left - selectedItem.size / 2;
+            selectedItem.y = e.clientY - rect.top - selectedItem.size / 2;
+            render();
+        }
+    };
 
-    window.addEventListener('mouseup', () => {
-        if (selectedIdx !== -1) layers[selectedIdx].dragging = false;
-        selectedIdx = -1;
-        canvas.style.cursor = 'grab';
-    });
+    window.onmouseup = () => {
+        if (selectedItem) selectedItem.isDragging = false;
+        selectedItem = null;
+    };
 
-    function clearCanvas() { layers = []; draw(); }
-    function saveImage() {
+    function clearAll() { items = []; render(); }
+
+    function download() {
         const link = document.createElement('a');
-        link.download = 'My_Custom_Bouquet.png';
-        link.href = canvas.toDataURL();
+        link.download = 'My_Digital_Bouquet.png';
+        link.href = canvas.toDataURL("image/png");
         link.click();
     }
-
-    // Initial item
-    addAsset('wrap');
 </script>
 
 </body>
