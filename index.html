@@ -3,228 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Archana!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <title>My Beloved - Birthday Serin</title>
     <style>
+        /* --- CSS STYLES --- */
         :root {
-            --pink: #ffafcc;
-            --text-purple: #5e548e;
-            --soft-white: rgba(255, 255, 255, 0.85);
+            --navy: #0b1426;
+            --gold: #fce38a;
+            --paper: #fffcf2;
+            --orange: #e67e22;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
+        body {
+            background-color: var(--navy);
+            font-family: 'Arial', sans-serif;
+            color: white;
             overflow: hidden;
-            font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(120deg, #ffafcc, #bde0fe, #ffc8dd, #b9fbc0, #fcf6bd);
-            background-size: 400% 400%;
-            animation: rainbowBG 15s ease infinite;
-            display: flex; justify-content: center; align-items: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
-        @keyframes rainbowBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Decorations */
+        .decor {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        #lineCanvas { position: fixed; top: 0; left: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; }
-
-        .container {
-            background: var(--soft-white);
-            padding: 2.5rem 1.5rem;
-            border-radius: 40px;
-            width: 90%;
-            max-width: 380px;
-            height: 80vh;
-            text-align: center;
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
             position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Page Management */
+        .page {
+            display: none;
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            position: absolute;
+            transition: opacity 0.5s ease;
+        }
+
+        .page.active { display: flex; z-index: 5; }
+
+        /* Typography */
+        h1, h2 { color: var(--gold); text-align: center; margin-bottom: 20px; }
+        .cursive { font-style: italic; font-family: 'Georgia', serif; font-size: 0.9rem; opacity: 0.8; }
+
+        /* Buttons */
+        .btn-start {
+            background: linear-gradient(to right, #f1c40f, #e67e22);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            color: #222;
+            cursor: pointer;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.4);
+        }
+
+        /* Grid Layout (Page 2) */
+        .grid-layout { position: relative; width: 100%; height: 100%; }
+        
+        .big-number {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 15rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.05);
+            z-index: 0;
+        }
+
+        .photo-frame {
+            background: #2a3a5a;
+            border: 4px solid white;
+            width: 130px;
+            height: 110px;
+            position: absolute;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #aaa;
+        }
+
+        .p1 { top: 10%; left: 5%; transform: rotate(-5deg); }
+        .p2 { top: 8%; right: 5%; transform: rotate(7deg); }
+        .p3 { bottom: 15%; left: 2%; transform: rotate(3deg); }
+        .p4 { bottom: 18%; right: 5%; transform: rotate(-8deg); }
+
+        .calendar-box {
+            background: var(--paper);
+            color: var(--orange);
+            border: 3px solid var(--orange);
+            border-radius: 15px;
+            padding: 15px;
+            width: 100px;
+            position: absolute;
+            top: 40%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            text-align: center;
+        }
+        .calendar-box .day { font-size: 2.5rem; font-weight: bold; display: block; }
+
+        /* Gift Page */
+        .gift-box {
+            width: 200px;
+            height: 150px;
+            background: #e74c3c;
+            position: relative;
+            margin: 40px auto;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+        }
+        .gift-box::before {
+            content: "🎀";
+            font-size: 50px;
+            position: absolute;
+            top: -30px; left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Letter Page Elements */
+        .vinyl-record {
+            width: 150px; height: 150px;
+            background: #222;
+            border-radius: 50%;
+            border: 10px solid #333;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        .play-btn { font-size: 2rem; color: #e74c3c; cursor: pointer; }
+
+        .envelope {
+            background: var(--paper);
+            width: 180px; height: 110px;
+            margin-top: 40px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #444;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        /* The Pop-up Letter Overlay */
+        .letter-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .letter-content {
+            background: var(--paper);
+            color: #333;
+            width: 85%;
+            padding: 30px;
+            border-radius: 10px;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 25px; cursor: pointer; }
+
+        /* Nav Arrows */
+        .nav-nav {
+            position: absolute;
+            bottom: 40px; width: 100%;
+            display: flex;
+            justify-content: space-around;
             z-index: 10;
-            backdrop-filter: blur(15px);
-            border: 6px solid white; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
+        .arrow { background: none; border: none; color: white; font-size: 3rem; cursor: pointer; opacity: 0.6; }
 
-        .page { display: none; width: 100%; animation: fadeIn 0.6s ease; }
-        .active { display: flex; flex-direction: column; align-items: center; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-
-        h1 { font-family: 'Great Vibes', cursive; color: var(--text-purple); font-size: 2.2rem; margin: 10px 0; }
-        h2 { font-family: 'Dancing Script', cursive; color: #ff4d6d; font-size: 1.8rem; }
-        p { color: #666; font-size: 1rem; line-height: 1.4; }
-
-        .btn {
-            background: #ffc8dd; border: none; padding: 12px 25px;
-            border-radius: 25px; color: #8d5e6b; font-weight: bold;
-            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: 0.3s; margin-top: 20px;
-        }
-        .btn:hover { transform: scale(1.05); background: #ffafcc; color: white; }
-
-        /* Step Specific Styles */
-        .cake-img { width: 180px; cursor: pointer; transition: 0.4s; }
-        .balloon-container { display: flex; gap: 10px; margin: 20px 0; }
-        .balloon { width: 45px; height: 60px; border-radius: 50%; cursor: pointer; transition: 0.3s; }
-        .hidden { display: none; }
-        .photo-frame { background: white; padding: 10px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .gift-box { font-size: 80px; cursor: pointer; animation: wobble 2s infinite; }
-        @keyframes wobble { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-10deg); } 75% { transform: rotate(10deg); } }
     </style>
 </head>
 <body>
 
-<canvas id="lineCanvas"></canvas>
+    <div id="decorations"></div>
 
-<div class="container">
-    
-    <div class="page active" id="p1">
-        <img src="https://i.imgur.com/vD0qY8p.png" width="120">
-        <h1>Hyy Archana Madhu!</h1>
-        <p>A Cutiepie was born today,<br>21 years ago!</p>
-        <button class="btn" onclick="go(2)">🎁 Start the surprise</button>
-    </div>
+    <div class="app-container">
+        
+        <section class="page active" id="p1">
+            <div style="font-size: 80px;">🐼</div>
+            <h1>Happy Birthday Serin</h1>
+            <div style="font-size: 30px;">🎂</div>
+            <button class="btn-start" onclick="go(2)">Let's begin the party</button>
+        </section>
 
-    <div class="page" id="p2">
-        <img src="https://i.imgur.com/83uD1E7.png" id="cake" class="cake-img">
-        <h2 id="cake-msg">Light the candle!</h2>
-        <button class="btn" id="lightBtn" onclick="lightCake()">🕯️ Light Candle</button>
-        <button class="btn hidden" id="nextBtn2" onclick="go(3)">Pop the Balloons →</button>
-    </div>
+        <section class="page" id="p2">
+            <div class="grid-layout">
+                <div class="big-number">21</div>
+                <div class="photo-frame p1">Photo 1</div>
+                <div class="photo-frame p2">Photo 2</div>
+                
+                <div class="calendar-box">
+                    <span class="day">15</span>
+                    <span class="month">Oct</span>
+                </div>
 
-    <div class="page" id="p3">
-        <h2>Pop all 4 balloons!</h2>
-        <div class="balloon-container">
-            <div class="balloon" onclick="pop(this)" style="background:#ffafcc"></div>
-            <div class="balloon" onclick="pop(this)" style="background:#bde0fe"></div>
-            <div class="balloon" onclick="pop(this)" style="background:#ffc8dd"></div>
-            <div class="balloon" onclick="pop(this)" style="background:#b9fbc0"></div>
+                <div class="photo-frame p3">Photo 3</div>
+                <div class="photo-frame p4">Photo 4</div>
+                
+                <div style="position: absolute; bottom: 5%; width: 100%; text-align: center;">
+                    <p class="banner-text" style="background: var(--paper); color: #333; padding: 5px 10px; display: inline-block; border-radius: 5px;">
+                        May this year be full of love, laughter & little miracles
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="p3">
+            <h2>A small gift for you</h2>
+            <div class="gift-box" onclick="go(4)"></div>
+        </section>
+
+        <section class="page" id="p4">
+            <h2>A small gift for you</h2>
+            
+            <div class="vinyl-record">
+                <div class="play-btn">▶</div>
+            </div>
+            <p class="cursive">a song for you</p>
+
+            <div class="envelope" onclick="openMsg()">
+                <div style="font-size: 30px;">❤️</div>
+                <p class="cursive">a letter for u</p>
+            </div>
+        </section>
+
+        <div class="nav-nav">
+            <button class="arrow" onclick="prev()">‹</button>
+            <button class="arrow" onclick="next()">›</button>
         </div>
-        <div id="pop-result" class="hidden">
-            <h2 style="color:#ff4d6d">You are a Cutiee!</h2>
-            <button class="btn" onclick="go(4)">Next Surprise →</button>
+    </div>
+
+    <div class="letter-overlay" id="letter">
+        <div class="letter-content">
+            <span class="close-btn" onclick="closeMsg()">&times;</span>
+            <p>Dear Serin,</p><br>
+            <p>On this special day, I want you to know how much you mean to me. You bring so much joy, laughter, and love into my life.</p><br>
+            <p>May this year be filled with beautiful moments, endless happiness, and all your dreams coming true.</p><br>
+            <p>Happy Birthday! 🎂</p><br>
+            <p style="text-align: right;">With all my love,<br><strong>Joe 🤍</strong></p>
         </div>
     </div>
 
-    <div class="page" id="p4">
-        <h1>Sweet Moments</h1>
-        <div class="photo-frame">
-            <img src="https://i.imgur.com/0u7l3m8.png" width="200" style="border-radius:10px;">
-        </div>
-        <p style="margin-top:10px; font-style:italic;">"Every second with you is a favorite memory."</p>
-        <button class="btn" onclick="go(5)">✉️ Open Message</button>
-    </div>
+    <script>
+        /* --- JAVASCRIPT LOGIC --- */
+        let current = 1;
+        const total = 4;
 
-    <div class="page" id="p5">
-        <div style="background:white; padding:20px; border-radius:20px; border:2px dashed #ffafcc;">
-            <h2>My Dearest,</h2>
-            <p style="font-family:'Dancing Script'; font-size:1.3rem;">"You make the world better just by being in it. Happy 21st Birthday, Archane! I promise to keep annoying you forever."</p>
-        </div>
-        <button class="btn" onclick="go(6)">One last thing... 🎁</button>
-    </div>
-
-    <div class="page" id="p6">
-        <div class="gift-box" onclick="finalSurprise()">🎁</div>
-        <p>Tap the gift to open!</p>
-    </div>
-
-    <div class="page" id="p7">
-        <img src="https://i.imgur.com/kS9YhGv.png" width="120">
-        <h1>Lots of love for you! ❤️</h1>
-        <p>Happy Birthday, Archana Madhu!</p>
-        <button class="btn" onclick="location.reload()">↺ Replay Surprise</button>
-    </div>
-
-</div>
-
-<script>
-    // 1. NAVIGATION LOGIC
-    function go(pageNumber) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById('p' + pageNumber).classList.add('active');
-        createSparkles(15);
-    }
-
-    // 2. CAKE LOGIC
-    function lightCake() {
-        document.getElementById('cake').src = "https://i.imgur.com/S9SjPPr.png";
-        document.getElementById('cake-msg').innerText = "Happy Birthday Cutiepie!";
-        document.getElementById('lightBtn').classList.add('hidden');
-        document.getElementById('nextBtn2').classList.remove('hidden');
-        createSparkles(30);
-    }
-
-    // 3. BALLOON LOGIC
-    let pops = 0;
-    function pop(el) {
-        el.style.transform = "scale(0)";
-        el.style.opacity = "0";
-        el.style.pointerEvents = "none";
-        pops++;
-        if(pops === 4) {
-            document.getElementById('pop-result').classList.remove('hidden');
+        function go(pageNum) {
+            document.getElementById(`p${current}`).classList.remove('active');
+            current = pageNum;
+            document.getElementById(`p${current}`).classList.add('active');
         }
-    }
 
-    // 4. FINAL SURPRISE
-    function finalSurprise() {
-        createSparkles(50);
-        setTimeout(() => go(7), 500);
-    }
-
-    // 5. BACKGROUND ANIMATION (From your previous code)
-    const canvas = document.getElementById('lineCanvas');
-    const ctx = canvas.getContext('2d');
-    let time = 0;
-    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    window.addEventListener('resize', resize); resize();
-
-    const colors = ['#ffafcc', '#bde0fe', '#ffc8dd', '#b9fbc0'];
-    const lines = Array.from({length: 40}, () => ({
-        yBase: Math.random() * canvas.height, 
-        amplitude: Math.random() * 50 + 20,
-        frequency: Math.random() * 0.005 + 0.002,
-        speed: Math.random() * 0.02 + 0.01,
-        color: colors[Math.floor(Math.random() * colors.length)]
-    }));
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        lines.forEach(line => {
-            ctx.beginPath(); ctx.strokeStyle = line.color; ctx.globalAlpha = 0.3; ctx.lineWidth = 2;
-            ctx.moveTo(0, line.yBase);
-            for (let x = 0; x < canvas.width; x += 20) {
-                const y = line.yBase + Math.sin(x * line.frequency + (time * line.speed)) * line.amplitude;
-                ctx.lineTo(x, y);
-            }
-            ctx.stroke();
-        });
-        time += 1; requestAnimationFrame(animate);
-    }
-    animate();
-
-    function createSparkles(count) {
-        for (let i = 0; i < count; i++) {
-            const p = document.createElement('div');
-            p.style.position = 'fixed';
-            p.style.width = '8px'; p.style.height = '8px';
-            p.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
-            p.style.borderRadius = '50%';
-            p.style.left = '50%'; p.style.top = '50%';
-            p.style.zIndex = '100';
-            document.body.appendChild(p);
-            const dX = (Math.random() - 0.5) * 600;
-            const dY = (Math.random() - 0.5) * 600;
-            p.animate([
-                { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-                { transform: `translate(${dX}px, ${dY}px) scale(0)`, opacity: 0 }
-            ], 1000).onfinish = () => p.remove();
+        function next() {
+            if(current < total) go(current + 1);
         }
-    }
-</script>
+
+        function prev() {
+            if(current > 1) go(current - 1);
+        }
+
+        function openMsg() {
+            document.getElementById('letter').style.display = 'flex';
+        }
+
+        function closeMsg() {
+            document.getElementById('letter').style.display = 'none';
+        }
+
+        // Add random floating emojis to the background
+        const decContainer = document.getElementById('decorations');
+        const emojis = ['✨', '🎈', '⭐', '🧁', '💖'];
+        for (let i = 0; i < 40; i++) {
+            const div = document.createElement('div');
+            div.className = 'decor';
+            div.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+            div.style.left = Math.random() * 100 + 'vw';
+            div.style.top = Math.random() * 100 + 'vh';
+            div.style.opacity = Math.random() * 0.5;
+            div.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            decContainer.appendChild(div);
+        }
+    </script>
 </body>
 </html>
